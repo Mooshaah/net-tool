@@ -1,0 +1,48 @@
+#!/bin/bash
+
+sudo su
+
+sudo apt-get install python-dev python-setuptools libpcap0.8-dev libnetfilter-queue-dev libssl-dev libjpeg-dev libxml2-dev libxslt1-dev libcapstone3 libcapstone-dev libffi-dev file
+
+sudo apt update
+
+sudo apt install python3-pip
+
+sudo apt install python2-pip
+
+pip install virtualenvwrapper
+
+export WORKON_HOME=$HOME/.virtualenvs
+
+export PROJECT_HOME=$HOME/Devel
+
+source /usr/local/bin/virtualenvwrapper.sh
+
+mkvirtualenv MITMf -p /usr/bin/python2.7
+
+git clone https://github.com/byt3bl33d3r/MITMf
+
+cd MITMf && git submodule init && git submodule update --recursive
+
+pip install -r requirements.txt
+
+pip install pyinotify
+
+pip install configobj
+
+pip install twisted
+
+pip install chardet
+
+pip install bs4
+
+pip install pillow
+
+pip install pefile
+
+wget https://files.pythonhosted.org/packages/6c/73/9f872cb81fc5c3bb48f7227872c28975f998f3e7c2b1c16e95e6432bbb90/python_magic-0.4.27-py2.py3-none-any.wh
+
+pip install python_magic-0.4.27-py2.py3-none-any.whl
+
+pip install capstone
+
