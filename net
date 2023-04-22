@@ -186,7 +186,7 @@ while true; do
 			cd ~/MTIMf
 			python2 ./mitmf
 		else
-			apt install wifite
+			apt install wifite -y
 		fi
 
 		;;
