@@ -183,8 +183,7 @@ while true; do
 		#Wifite
 
 		if which wifite >/dev/null; then
-			cd ~/MTIMf
-			python2 ./mitmf
+			wifite
 		else
 			apt install wifite -y
 		fi
