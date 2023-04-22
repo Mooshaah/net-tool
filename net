@@ -13,7 +13,7 @@ echo -e "\e[36m=====================================================
 5) scan for IP addresses & open ports using \e[35mNMAP\e[36m
 6) Launch a \e[31mDOS\e[36m attack
 7) Launch a \e[31mDDOS\e[36m attack
-8) Launch \e[32mMITM\e[36m attack
+8) Launch \e[33mWifi\e[36m\e[32mte\e[36m attack
 9) quit
 =====================================================\e[0m"
 }
@@ -186,15 +186,13 @@ case $SCANNER_OPTION in
 		   python2 saphyra.py http://$DDOS_IP
 		   ;;
 	   [8])
-		   #MITM
-		   #!/bin/bash
+		   #Wifite
 
-			if which MITMf >/dev/null; then
+			if which wifite >/dev/null; then
 				cd ~/MTIMf
 				python2 ./mitmf
 			else
-				chmod u+x mitmf-dependencies
-				./mitmf-dependencies
+				apt install wifite
 			fi
 		   
 		   ;;
